@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,13 +15,11 @@
             color: white;
         }
 
-        /* TITLE */
         h2 {
             text-align: center;
             padding: 15px;
         }
 
-        /* GRID */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -28,7 +27,6 @@
             padding: 15px;
         }
 
-        /* CARD */
         .product-card {
             background: #1a1a1a;
             padding: 10px;
@@ -48,7 +46,6 @@
             font-weight: bold;
         }
 
-        /* BUTTON */
         button {
             margin: 4px;
             background: #ff6600;
@@ -60,7 +57,6 @@
             width: 90%;
         }
 
-        /* CART */
         .cart-btn {
             position: fixed;
             bottom: 20px;
@@ -82,33 +78,6 @@
             display: none;
         }
 
-        /* POPUP */
-        .popup-form {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .popup-content {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-        }
-
-        .popup-content input {
-            width: 95%;
-            padding: 8px;
-            margin: 6px 0;
-            border-radius: 5px;
-            border: none;
-        }
-
-        /* REVIEW SMALL */
         .review-section {
             width: 90%;
             max-width: 350px;
@@ -145,7 +114,7 @@
 
 <body>
 
-    <h2>Maa Gainer</h2>
+    <h2>Whey</h2>
 
     <div id="grid" class="grid"></div>
 
@@ -157,22 +126,6 @@
         <div id="cartItems"></div>
         <h4>Total: ₹<span id="total">0</span></h4>
         <button onclick="sendCartWhatsApp()">Order Cart</button>
-    </div>
-
-    <!-- ORDER POPUP -->
-    <div class="popup-form" id="orderPopup">
-        <div class="popup-content">
-            <h3>Order</h3>
-            <p id="orderProductName"></p>
-
-            <input type="number" id="orderQty" value="1">
-            <input type="text" id="orderName" placeholder="Name">
-            <input type="text" id="orderPhone" placeholder="Phone">
-            <input type="email" id="orderEmail" placeholder="Email">
-
-            <button onclick="submitOrder()">Submit</button>
-            <button onclick="closeOrderPopup()">Cancel</button>
-        </div>
     </div>
 
     <!-- REVIEW -->
@@ -201,7 +154,6 @@
     <script>
         const whatsappNumber = "917339563621";
 
-        /* ✅ MAX 20 PRODUCTS */
         const products = [];
         for (let i = 1; i <= 20; i++) {
             products.push({
@@ -213,56 +165,32 @@
 
         const grid = document.getElementById("grid");
         let cart = [];
-        let currentIndex = null;
 
         /* LOAD PRODUCTS */
         products.forEach((p, i) => {
             const div = document.createElement("div");
             div.className = "product-card";
             div.innerHTML = `
-    <img src="${p.img}">
-    <h4>${p.name}</h4>
-    <p class="price">₹${p.price}</p>
-    <button onclick="openOrder(${i})">Order</button>
-    <button onclick="addToCart(${i})">Cart</button>
-    `;
+                <img src="${p.img}">
+                <h4>${p.name}</h4>
+                <p class="price">₹${p.price}</p>
+                <button onclick="orderNow(${i})">Order</button>
+                <button onclick="addToCart(${i})">Cart</button>
+            `;
             grid.appendChild(div);
         });
 
-        /* ORDER */
-        function openOrder(i) {
-            currentIndex = i;
-            document.getElementById("orderProductName").innerText = products[i].name;
-            document.getElementById("orderPopup").style.display = "flex";
-        }
+        /* ✅ DIRECT ORDER (FIXED) */
+        function orderNow(i) {
+            const p = products[i];
 
-        function closeOrderPopup() {
-            document.getElementById("orderPopup").style.display = "none";
-        }
+            let msg = `Order:
+${p.name}
+Price: ₹${p.price}`;
 
-        function submitOrder() {
-            const qty = parseInt(document.getElementById("orderQty").value);
-            const name = document.getElementById("orderName").value;
-            const phone = document.getElementById("orderPhone").value;
-            const email = document.getElementById("orderEmail").value;
+            let url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
 
-            if (!name || !phone || !email) {
-                alert("Fill all fields");
-                return;
-            }
-
-            if (phone.length != 10) {
-                alert("Enter 10 digit phone number");
-                return;
-            }
-
-            const p = products[currentIndex];
-            const total = p.price * qty;
-
-            let msg = `Order:%0A${p.name}%0AQty:${qty}%0ATotal:₹${total}%0A${name}%0A${phone}%0A${email}`;
-
-            window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${msg}`);
-            closeOrderPopup();
+            window.location.href = url;
         }
 
         /* CART */
@@ -301,17 +229,19 @@
                 return;
             }
 
-            let msg = "Order:%0A";
+            let msg = "Order:\n";
             let total = 0;
 
             cart.forEach(c => {
-                msg += `${c.name} ₹${c.total}%0A`;
+                msg += `${c.name} ₹${c.total}\n`;
                 total += c.total;
             });
 
             msg += `Total: ₹${total}`;
 
-            window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${msg}`);
+            let url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+
+            window.location.href = url;
         }
 
         /* REVIEW */
@@ -325,9 +255,6 @@
         });
 
         function submitReview() {
-            const index = parseInt(select.value);
-            const product = products[index];
-
             const name = document.getElementById("reviewName").value;
             const comment = document.getElementById("reviewComment").value;
             const rating = document.getElementById("reviewRating").value;
@@ -350,3 +277,4 @@
 </body>
 
 </html>
+```
