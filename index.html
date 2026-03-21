@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- ✅ CORRECT VIEWPORT -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SMF Fitness & Supplements</title>
+
+    <link rel="icon" href="img/smf logo (1).jpeg">
+
+    <style>
+        /* ===== GLOBAL ===== */
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: relative;
+            padding: 15px;
+            background: black;
+            text-align: center;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        /* ===== MENU ICON ===== */
+        .menu-icon {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* ===== MENU ===== */
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        /* ===== LOGO ===== */
+        .logo {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .logo img {
+            width: 300px;
+            /* ✅ BIG LOGO */
+            max-width: 90%;
+            /* prevents overflow */
+        }
+
+        /* ===== SOCIAL LINKS ===== */
+        .link {
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            background: #111;
+        }
+
+        .link a {
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .link img {
+            display: block;
+            margin: auto;
+            height: 30px;
+        }
+
+        /* ===== HAMBURGER ===== */
+        #menu-toggle {
+            display: none;
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+
+            nav h1 {
+                font-size: 16px;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .menu {
+                display: none;
+                flex-direction: column;
+                background: #111;
+                position: absolute;
+                top: 60px;
+                right: 10px;
+                width: 200px;
+                border-radius: 10px;
+            }
+
+            #menu-toggle:checked+.menu {
+                display: flex;
+            }
+
+            .menu a {
+                padding: 15px;
+                border-bottom: 1px solid #333;
+            }
+
+            /* Logo smaller on tablet */
+            .logo img {
+                width: 220px;
+            }
+
+            .link {
+                gap: 15px;
+            }
+
+            .link img {
+                height: 25px;
+            }
+        }
+
+        /* ===== SMALL MOBILE ===== */
+        @media (max-width: 480px) {
+
+            nav h1 {
+                font-size: 14px;
+            }
+
+            /* Logo smaller on mobile */
+            .logo img {
+                width: 180px;
+            }
+
+            .link {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav>
+        <h1>SMF FITNESS & SUPPLEMENTS</h1>
+        <label for="menu-toggle" class="menu-icon">☰</label>
+
+        <br>
+        <hr>
+        <input type="checkbox" id="menu-toggle">
+
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="products.html">SUPPLEMENTS</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <!-- ===== LOGO ===== -->
+    <div class="logo">
+        <img src="img/smf logo (1).jpeg" alt="Logo">
+    </div>
+
+    <!-- ===== SOCIAL LINKS ===== -->
+    <div class="link">
+
+        <a href="https://www.instagram.com/smf_501?igsh=MTAxa21xNTlyYWZqbQ==">
+            <img src="img/Social=Instagram,Style=Original (1).svg">
+            INSTAGRAM
+        </a>
+
+        <a href="#">
+            <img src="img/Social=Facebook,Style=Original (1).svg">
+            FACEBOOK
+        </a>
+
+        <a href="#">
+            <img src="img/Social=WhatsApp,Style=Original (1).svg">
+            WHATSAPP
+        </a>
+
+    </div>
+
+</body>
+
+</html>
